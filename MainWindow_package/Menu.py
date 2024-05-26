@@ -1,12 +1,13 @@
 from PyQt6.QtWidgets import QMenuBar, QMenu, QColorDialog
-from PyQt6.QtGui import QAction
+from PyQt6.QtGui import QAction, QColor
+from .GameField import rgb_field_list
 
 class Menu(QMenuBar):
     def __init__(self, parent):
         super().__init__(parent)
 
         self.stateMItem=QMenu('State')
-        self.editMItem=QMenu('Edit')
+        self.editMItem=QMenu('Edit color')
         self.fileMItem=QMenu('File')
         self.addMenu(self.stateMItem)
         self.addMenu(self.editMItem)
@@ -28,13 +29,19 @@ class Menu(QMenuBar):
         self.openFileAction=QAction('&Open')
         self.fileMItem.addAction(self.openFileAction)
 
-        self.editColorAction=QAction('Edit color')
+        self.editColorAction=QAction('Color of field')
         self.editMItem.addAction(self.editColorAction)
-        self.editColorAction.triggered.connect(self.editColor)
+        self.editColorAction.triggered.connect(self.editFieldColor)
 
-    def editColor(self):
+    def editFieldColor(self):
         self.dialog=QColorDialog(parent=self)
-        self.dialog.open()
+        #self.dialog.open()
+        color = QColor(self.dialog.getColor())
+        print(color.red(), color.green(), color.blue())
+        global rgb_field_list
+        rgb_field_list[0] = color.red()
+        rgb_field_list[1] = color.green()
+        rgb_field_list[2] = color.blue()
 
 
 

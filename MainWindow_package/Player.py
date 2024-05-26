@@ -1,5 +1,5 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QLabel, QPushButton, QVBoxLayout, QFileDialog, QLineEdit, QWidget, QLineEdit
+from PyQt6.QtWidgets import QLabel, QPushButton, QVBoxLayout, QFileDialog, QWidget, QLineEdit
 from PyQt6.QtGui import QPixmap
 class Player(QWidget):
     def __init__(self, numberOfPlayer):
@@ -32,5 +32,5 @@ class Player(QWidget):
         file=QFileDialog()
         file_name=file.getOpenFileName()[0]
         self.pixmap = QPixmap(file_name)
-        self.pixmap=self.pixmap.scaled(self.width(), self.height())
+        self.pixmap=self.pixmap.scaled(300, 300)
         self.playerPicture.setPixmap(self.pixmap)
