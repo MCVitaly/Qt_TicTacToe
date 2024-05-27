@@ -10,13 +10,17 @@ window=QMainWindow()
 window.setGeometry(200, 100, 1100, 650)
 window.setWindowTitle('Tic tac toe')
 
-window.setMenuBar(Menu(window))
+menu=Menu(window)
+gameField=GameField(window)
+menu.restartGameAction(gameField.restartGameField)
+
+window.setMenuBar(menu)
 
 layout=QHBoxLayout()
 
 layout1=QVBoxLayout()
 layout1.addWidget(QLabel(), 1)
-layout1.addWidget(GameField(window), 7)
+layout1.addWidget(gameField, 7)
 layout1.addWidget(QLabel(), 1)
 
 wdg=QWidget(window)

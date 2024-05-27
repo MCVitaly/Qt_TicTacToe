@@ -38,7 +38,7 @@ class Menu(QMenuBar):
 
         self.restartAction=QAction('Restart game')
         self.restartMItem.addAction(self.restartAction)
-        self.restartAction.triggered.connect(self.restartGame)
+        #self.restartAction.triggered.connect(self.restartGame)
 
         self.editColorOfCrossAndZero=QAction('Color of cross and zero')
         self.editMItem.addAction(self.editColorOfCrossAndZero)
@@ -62,8 +62,8 @@ class Menu(QMenuBar):
         rgb_crosseAndZero_list[1] = color.green()
         rgb_crosseAndZero_list[2] = color.blue()
 
-    def restartGame(self):
-        pass
+    def restartGameAction(self, handler):
+        self.restartAction.triggered.connect(handler)
 
 
 
