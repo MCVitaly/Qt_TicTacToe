@@ -8,6 +8,7 @@ import sys
 app=QApplication(sys.argv)
 window=QMainWindow()
 window.setGeometry(200, 100, 1100, 650)
+window.setWindowTitle('Tic tac toe')
 
 window.setMenuBar(Menu(window))
 

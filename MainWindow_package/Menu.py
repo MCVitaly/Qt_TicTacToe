@@ -1,23 +1,26 @@
 from PyQt6.QtWidgets import QMenuBar, QMenu, QColorDialog
 from PyQt6.QtGui import QAction, QColor
-from .GameField import rgb_field_list
+from .GameField import rgb_field_list, rgb_crosseAndZero_list
 
 class Menu(QMenuBar):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.stateMItem=QMenu('State')
+        #self.stateMItem=QMenu('State')
         self.editMItem=QMenu('Edit color')
-        self.fileMItem=QMenu('File')
-        self.addMenu(self.stateMItem)
+        self.restartMItem=QMenu('Restart')
+        #self.fileMItem=QMenu('File')
+
+        #self.addMenu(self.stateMItem)
+        self.addMenu(self.restartMItem)
         self.addMenu(self.editMItem)
-        self.addMenu(self.fileMItem)
+        #self.addMenu(self.fileMItem)
 
-        self.loadMenuAction=QAction('&Load')
-        self.stateMItem.addAction(self.loadMenuAction)
-
-        self.saveMenuAction=QAction('&Save')
-        self.stateMItem.addAction(self.saveMenuAction)
+        # self.loadMenuAction=QAction('&Load')
+        # self.stateMItem.addAction(self.loadMenuAction)
+        #
+        # self.saveMenuAction=QAction('&Save')
+        # self.stateMItem.addAction(self.saveMenuAction)
 
         # self.dropdownMenu=QMenu('&Dropdown')
         # self.dropdownMenu.addAction('&Option 1')
@@ -26,24 +29,41 @@ class Menu(QMenuBar):
         #
         # self.editMItem.addMenu(self.dropdownMenu)
 
-        self.openFileAction=QAction('&Open')
-        self.fileMItem.addAction(self.openFileAction)
+        # self.openFileAction=QAction('&Open')
+        # self.fileMItem.addAction(self.openFileAction)
 
-        self.editColorAction=QAction('Color of field')
-        self.editMItem.addAction(self.editColorAction)
-        self.editColorAction.triggered.connect(self.editFieldColor)
+        self.editColorOfFieldAction=QAction('Color of field')
+        self.editMItem.addAction(self.editColorOfFieldAction)
+        self.editColorOfFieldAction.triggered.connect(self.editFieldColor)
+
+        self.restartAction=QAction('Restart game')
+        self.restartMItem.addAction(self.restartAction)
+        self.restartAction.triggered.connect(self.restartGame)
+
+        self.editColorOfCrossAndZero=QAction('Color of cross and zero')
+        self.editMItem.addAction(self.editColorOfCrossAndZero)
+        self.editColorOfCrossAndZero.triggered.connect(self.editColorOfCrAndZe)
 
     def editFieldColor(self):
         self.dialog=QColorDialog(parent=self)
         #self.dialog.open()
         color = QColor(self.dialog.getColor())
-        print(color.red(), color.green(), color.blue())
+
         global rgb_field_list
         rgb_field_list[0] = color.red()
         rgb_field_list[1] = color.green()
         rgb_field_list[2] = color.blue()
 
+    def editColorOfCrAndZe(self):
+        self.dialog=QColorDialog(parent=self)
+        color=QColor(self.dialog.getColor())
+        global rgb_crosseAndZero_list
+        rgb_crosseAndZero_list[0] =color.red()
+        rgb_crosseAndZero_list[1] = color.green()
+        rgb_crosseAndZero_list[2] = color.blue()
 
+    def restartGame(self):
+        pass
 
 
 

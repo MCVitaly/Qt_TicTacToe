@@ -6,12 +6,15 @@ from PyQt6.QtGui import QPixmap, QPainter, QColor, QPalette
 player = 1
 
 rgb_field_list=[0, 0, 139]
+rgb_crosseAndZero_list=[0, 0, 0]
 class GameFieldButton(QPushButton):
     def __init__(self):
         super().__init__()
 
         self.setFixedWidth(30)
-        self.setStyleSheet("background-color: white; font-size: 24px; min-width: 40px; min-height: 40px; ")
+        self.setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
+                           f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
+
         self.setFixedHeight(30)
 
         self.access=True
@@ -58,9 +61,13 @@ class GameFieldCell_wdg(QWidget):
 
         if player==1:
             name_of_button.setText("x")
+            name_of_button.setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
+                           f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
             player=2
         else:
             name_of_button.setText("o")
+            name_of_button.setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
+                           f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
             player=1
 
         name_of_button.access=False
@@ -79,6 +86,7 @@ class GameFieldCell_wdg(QWidget):
             self.buttons[0][0].text()==self.buttons[1][0].text()==self.buttons[2][0].text()=='x' or
             self.buttons[0][1].text()==self.buttons[1][1].text()==self.buttons[2][1].text()=='x' or
             self.buttons[0][2].text()==self.buttons[1][2].text()==self.buttons[2][2].text()=='x'):
+
             self.vinner_in_cell='x'
             for i in range(3):
                 for j in range(3):
@@ -99,6 +107,10 @@ class GameFieldCell_wdg(QWidget):
                 for j in range(3):
                     if (self._gameFieldPointer.cells[i][j] == self):
                         self._gameFieldPointer.layout_.addWidget(bigZeroOrCross('o'), i, j)
+        elif(self.buttons[0][0].access==False and self.buttons[0][1].access==False and self.buttons[0][2].access==False and
+        self.buttons[1][0].access==False and self.buttons[1][1].access==False and self.buttons[1][2].access==False and
+        self.buttons[2][0].access==False and self.buttons[2][1].access==False and self.buttons[2][2].access==False):
+            self.vinner_in_cell = 0
         else:
             return
 
@@ -115,6 +127,8 @@ class GameFieldCell_wdg(QWidget):
         cells[0][1].vinner_in_cell==cells[1][1].vinner_in_cell==cells[2][1].vinner_in_cell=='x' or
         cells[0][2].vinner_in_cell==cells[1][2].vinner_in_cell==cells[2][2].vinner_in_cell=='x'):
             self.dialog=QMessageBox()
+            self.dialog.setWindowTitle('message')
+            self.dialog.setIcon(QMessageBox.Icon.Information)
             self.dialog.setText("Player 1 won")
             self.dialog.exec()
             return
@@ -127,10 +141,21 @@ class GameFieldCell_wdg(QWidget):
         cells[0][1].vinner_in_cell==cells[1][1].vinner_in_cell==cells[2][1].vinner_in_cell=='o' or
         cells[0][2].vinner_in_cell==cells[1][2].vinner_in_cell==cells[2][2].vinner_in_cell=='o'):
             self.dialog = QMessageBox()
+            self.dialog.setWindowTitle('message')
+            self.dialog.setIcon(QMessageBox.Icon.Information)
             self.dialog.setText("Player 2 won")
             self.dialog.exec()
             return
-
+        elif(( not (cells[0][0].vinner_in_cell is None))and( not (cells[0][1].vinner_in_cell is None)) and
+            (not (cells[0][2].vinner_in_cell is None))and( not (cells[1][0].vinner_in_cell is None)) and
+            (not (cells[1][1].vinner_in_cell is None))and( not (cells[1][2].vinner_in_cell is None))and
+            (not (cells[2][0].vinner_in_cell is None))and( not (cells[2][1].vinner_in_cell is None))and
+            (not (cells[2][2].vinner_in_cell is None))):
+            self.dialog = QMessageBox()
+            self.dialog.setWindowTitle('message')
+            self.dialog.setIcon(QMessageBox.Icon.Information)
+            self.dialog.setText("A draw game")
+            self.dialog.exec()
     def set_access_to_game_field(self, x_of_button, y_of_button):
         if (self == self._gameFieldPointer.cells[x_of_button][y_of_button] and (self.vinner_in_cell is None)):
             return
@@ -141,8 +166,8 @@ class GameFieldCell_wdg(QWidget):
                         for l in range(3):
                             if(self._gameFieldPointer.cells[i][j].buttons[k][l].access==True):
                                 self._gameFieldPointer.cells[i][j].buttons[k][l].setEnabled(True)
-                                self._gameFieldPointer.cells[i][j].buttons[k][l].setStyleSheet(
-                                "background-color: white; font-size: 24px; min-width: 40px; min-height: 40px; ")
+                                self._gameFieldPointer.cells[i][j].buttons[k][l].setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
+                           f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
 
 
 
@@ -153,8 +178,8 @@ class GameFieldCell_wdg(QWidget):
                         for l in range(3):
                             if (self._gameFieldPointer.cells[i][j].buttons[k][l].access == True):
                                 self._gameFieldPointer.cells[i][j].buttons[k][l].setEnabled(True)
-                                self._gameFieldPointer.cells[i][j].buttons[k][l].setStyleSheet(
-                                    "background-color: white; font-size: 24px; min-width: 40px; min-height: 40px; ")
+                                self._gameFieldPointer.cells[i][j].buttons[k][l].setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
+                           f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
 
         else:
             if(self._gameFieldPointer.accessToAllButtons_flag):
@@ -163,7 +188,8 @@ class GameFieldCell_wdg(QWidget):
                             for k in range(3):
                                 for l in range(3):
                                     self._gameFieldPointer.cells[i][j].buttons[k][l].setEnabled(False)
-                                    self._gameFieldPointer.cells[i][j].buttons[k][l].setStyleSheet("background-color: #D3D3D3; font-size: 24px; min-width: 40px; min-height: 40px; ")
+                                    self._gameFieldPointer.cells[i][j].buttons[k][l].setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
+                           f" background-color: #D3D3D3; font-size: 35px; min-width: 40px; min-height: 40px; ")
 
             else:
                 for button in self.buttons:
@@ -173,7 +199,8 @@ class GameFieldCell_wdg(QWidget):
                 for j in range(3):
                     if (self._gameFieldPointer.cells[x_of_button][y_of_button].buttons[i][j].access == True):
                         self._gameFieldPointer.cells[x_of_button][y_of_button].buttons[i][j].setEnabled(True)
-                        self._gameFieldPointer.cells[x_of_button][y_of_button].buttons[i][j].setStyleSheet("background-color: white; font-size: 24px; min-width: 40px; min-height: 40px; ")
+                        self._gameFieldPointer.cells[x_of_button][y_of_button].buttons[i][j].setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
+                           f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
 
 
 
@@ -201,7 +228,7 @@ class GameField(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        rect = QRect(1, 1, self.width(), self.height()+2)
+        rect = QRect(1, 1, self.width(), self.height()+5)
 
         global rgb_field_list
 
@@ -217,7 +244,7 @@ class bigZeroOrCross(QLabel):
         self.setGeometry(3, 0, 143, 143)
         self.pen = QtGui.QPen()
         self.pen.setWidth(10)
-        self.pen.setColor(Qt.GlobalColor.black)
+        self.pen.setColor(QColor(rgb_crosseAndZero_list[0], rgb_crosseAndZero_list[1], rgb_crosseAndZero_list[2]))
 
         self.canvas=QtGui.QPixmap(self.width(), self.height())
         self.canvas.fill(Qt.GlobalColor.white)
