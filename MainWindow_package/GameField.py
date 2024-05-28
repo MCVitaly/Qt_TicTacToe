@@ -132,6 +132,11 @@ class GameFieldCell_wdg(QWidget):
             self.dialog.setIcon(QMessageBox.Icon.Information)
             self.dialog.setText("Player 1 won")
             self.dialog.exec()
+            for i in range(3):
+                for j in range(3):
+                    for k in range(3):
+                        for l in range(3):
+                            cells[i][j].buttons[k][l].access = False
             return
         elif (cells[0][0].vinner_in_cell==cells[1][1].vinner_in_cell==cells[2][2].vinner_in_cell=='o' or
         cells[0][2].vinner_in_cell==cells[1][1].vinner_in_cell==cells[2][0].vinner_in_cell=='o' or
@@ -146,6 +151,11 @@ class GameFieldCell_wdg(QWidget):
             self.dialog.setIcon(QMessageBox.Icon.Information)
             self.dialog.setText("Player 2 won")
             self.dialog.exec()
+            for i in range(3):
+                for j in range(3):
+                    for k in range(3):
+                        for l in range(3):
+                            cells[i][j].buttons[k][l].access = False
             return
         elif(( not (cells[0][0].vinner_in_cell is None))and( not (cells[0][1].vinner_in_cell is None)) and
             (not (cells[0][2].vinner_in_cell is None))and( not (cells[1][0].vinner_in_cell is None)) and
@@ -157,6 +167,11 @@ class GameFieldCell_wdg(QWidget):
             self.dialog.setIcon(QMessageBox.Icon.Information)
             self.dialog.setText("A draw game")
             self.dialog.exec()
+            for i in range(3):
+                for j in range(3):
+                    for k in range(3):
+                        for l in range(3):
+                            cells[i][j].buttons[k][l].access = False
     def set_access_to_game_field(self, x_of_button, y_of_button):
         if (self == self._gameFieldPointer.cells[x_of_button][y_of_button] and (self.vinner_in_cell is None) and
                 (not self._gameFieldPointer.didFirstClickBe)):
@@ -248,7 +263,7 @@ class GameField(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        rect = QRect(1, 1, self.width(), self.height()+5)
+        rect = QRect(5, 9, self.width()-12, self.height()+5)
 
         global rgb_field_list
 
@@ -257,13 +272,16 @@ class GameField(QWidget):
     def restartGameField(self):
         global player
         player=1
-        # for i in range(3):
-        #     for j in range(3):
-        #         if(not (self.bigCrossAndZero_matrix[i][j] is None)):
-        #             widget = self.bigCrossAndZero_matrix[i][j]
-        #             self.layout_.removeWidget(widget)
-        #             widget.deleteLater()
-        #             self.bigCrossAndZero_matrix[i][j] = None
+        self.didFirstClickBe = False
+        for i in range(3):
+            for j in range(3):
+                if(not (self.bigCrossAndZero_matrix[i][j] is None)):
+                    widget = self.bigCrossAndZero_matrix[i][j]
+                    self.layout_.removeWidget(widget)
+                    widget.setParent(None)
+                    widget.deleteLater()
+
+                    self.bigCrossAndZero_matrix[i][j] = None
         for i in range(3):
             for j in range(3):
                 self.cells[i][j].vinner_in_cell=None
@@ -276,13 +294,12 @@ class GameField(QWidget):
                            f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
 
 
-
 class bigZeroOrCross(QLabel):
     def __init__(self, symbol):
         super().__init__()
 
 
-        self.setGeometry(3, 0, 143, 143)
+        self.setGeometry(8, 5, 145, 143)
         self.pen = QtGui.QPen()
         self.pen.setWidth(10)
         self.pen.setColor(QColor(rgb_crosseAndZero_list[0], rgb_crosseAndZero_list[1], rgb_crosseAndZero_list[2]))
@@ -300,5 +317,6 @@ class bigZeroOrCross(QLabel):
         elif(symbol=='x'):
             self.painter.drawLine(20, 20, self.width()-20, self.height()-20)
             self.painter.drawLine(self.width()-20, 20, 20, self.height()-20)
+            self.painter.end()
         self.setPixmap(self.canvas)
 
