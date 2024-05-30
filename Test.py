@@ -26,12 +26,26 @@ layout1.addWidget(QLabel(), 1)
 wdg=QWidget(window)
 wdg.setLayout(layout1)
 
+playerX=Player( 'x')
+playerO=Player( 'o')
+playerX.label.setStyleSheet("background-color: #90EE90; font-size: 30px")
+
+def showCurrentPlayer( currentPlayerSymbol):
+    if currentPlayerSymbol == 'x':
+        playerX.label.setStyleSheet("background-color: #90EE90; font-size: 30px")
+        playerO.label.setStyleSheet("background-color: white; font-size: 30px")
+    else:
+        playerO.label.setStyleSheet("background-color: #90EE90; font-size: 30px")
+        playerX.label.setStyleSheet("background-color: white; font-size: 30px")
+
+gameField.showCurrentPlayerForO(showCurrentPlayer)
+gameField.showCurrentPlayerForX(showCurrentPlayer)
 
 
 
-layout.addWidget(Player(2), 3)
+layout.addWidget(playerX, 3)
 layout.addWidget(wdg, 5)
-layout.addWidget(Player(1), 3)
+layout.addWidget(playerO, 3)
 
 widget=QWidget()
 widget.setLayout(layout)

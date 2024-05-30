@@ -62,16 +62,19 @@ class GameFieldCell_wdg(QWidget):
             name_of_button.setText("x")
             name_of_button.setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
                            f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
+            self._gameFieldPointer.functionOfChangeCurrentPlayer('o')
             player=2
         else:
             name_of_button.setText("o")
             name_of_button.setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
                            f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
+            self._gameFieldPointer.functionOfChangeCurrentPlayer('x')
             player=1
 
         name_of_button.access=False
         self.check_vinner_in_cells()
         self.set_access_to_game_field(x_of_button, y_of_button)
+
 
 
 
@@ -249,6 +252,8 @@ class GameField(QWidget):
         self.didFirstClickBe = False
         self.setAutoFillBackground(True)
 
+        self.functionOfChangeCurrentPlayer = None
+
         self.bigCrossAndZero_matrix=[[None for _ in range(3)] for _ in range(3)]
         self.layout_ = QGridLayout()
         self.layout_.setContentsMargins(0, 0, 0, 0)
@@ -293,6 +298,12 @@ class GameField(QWidget):
                         self.cells[i][j].buttons[k][l].setStyleSheet(f"color: rgb({rgb_crosseAndZero_list[0]}, {rgb_crosseAndZero_list[1]}, {rgb_crosseAndZero_list[2]});"
                            f" background-color: white; font-size: 35px; min-width: 40px; min-height: 40px; ")
 
+    def showCurrentPlayerForX(self, function_from_menu):
+        self.functionOfChangeCurrentPlayer = function_from_menu
+
+    def showCurrentPlayerForO(self, function_from_menu):
+        self.functionOfChangeCurrentPlayer = function_from_menu
+
 
 class bigZeroOrCross(QLabel):
     def __init__(self, symbol):
@@ -319,4 +330,10 @@ class bigZeroOrCross(QLabel):
             self.painter.drawLine(self.width()-20, 20, 20, self.height()-20)
             self.painter.end()
         self.setPixmap(self.canvas)
+
+
+
+
+
+
 
