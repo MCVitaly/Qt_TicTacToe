@@ -9,6 +9,7 @@ class Player(QWidget):
 
         self.playerSymbol =playerSymbol
 
+        self.picturePath=None
         self.label=QLabel('Player '+str(playerSymbol))
         self.label.setStyleSheet("background-color: white; font-size: 30px")
         self.layout.addWidget(self.label, 1)
@@ -34,8 +35,8 @@ class Player(QWidget):
 
     def showImage(self):
         file=QFileDialog()
-        file_name=file.getOpenFileName()[0]
-        self.pixmap = QPixmap(file_name)
+        self.picturePath=file.getOpenFileName()[0]
+        self.pixmap = QPixmap(self.picturePath)
         self.pixmap=self.pixmap.scaled(300, 300)
         self.playerPicture.setPixmap(self.pixmap)
 

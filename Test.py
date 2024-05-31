@@ -1,8 +1,10 @@
 from MainWindow_package import GameField, Menu, Player
-
+from PyQt6.QtWidgets import QFileDialog, QMessageBox
+import json
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QGridLayout, QWidget, QApplication, QMainWindow, QWidget, QHBoxLayout, QLabel, QVBoxLayout
-from PyQt6.QtGui import QResizeEvent
+from SaveGame import saveGame, getGameComponets
+from LoadGame import getGameComponetsToLoad, loadGame
 import sys
 
 app=QApplication(sys.argv)
@@ -12,7 +14,16 @@ window.setWindowTitle('Tic tac toe')
 
 menu=Menu(window)
 gameField=GameField(window)
+playerX=Player( 'x')
+playerO=Player( 'o')
+
 menu.restartGameAction(gameField.restartGameField)
+getGameComponets(window, gameField, playerX, playerO)
+getGameComponetsToLoad(window, gameField, playerX, playerO)
+
+
+menu.saveGameAction(saveGame)
+menu.loadGameAction(loadGame)
 
 window.setMenuBar(menu)
 
@@ -26,8 +37,7 @@ layout1.addWidget(QLabel(), 1)
 wdg=QWidget(window)
 wdg.setLayout(layout1)
 
-playerX=Player( 'x')
-playerO=Player( 'o')
+
 playerX.label.setStyleSheet("background-color: #90EE90; font-size: 30px")
 
 def showCurrentPlayer( currentPlayerSymbol):

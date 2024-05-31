@@ -6,31 +6,25 @@ class Menu(QMenuBar):
     def __init__(self, parent):
         super().__init__(parent)
 
-        #self.stateMItem=QMenu('State')
+        self.stateMItem=QMenu('State')
         self.editMItem=QMenu('Edit color')
         self.restartMItem=QMenu('Restart')
-        #self.fileMItem=QMenu('File')
 
-        #self.addMenu(self.stateMItem)
+        self.addMenu(self.stateMItem)
         self.addMenu(self.restartMItem)
         self.addMenu(self.editMItem)
-        #self.addMenu(self.fileMItem)
 
-        # self.loadMenuAction=QAction('&Load')
-        # self.stateMItem.addAction(self.loadMenuAction)
-        #
-        # self.saveMenuAction=QAction('&Save')
-        # self.stateMItem.addAction(self.saveMenuAction)
+        self.loadMenuAction=QAction('Load')
+        self.stateMItem.addAction(self.loadMenuAction)
+
+        self.saveMenuAction=QAction('Save')
+        self.stateMItem.addAction(self.saveMenuAction)
 
         # self.dropdownMenu=QMenu('&Dropdown')
         # self.dropdownMenu.addAction('&Option 1')
         # self.dropdownMenu.addAction('&Option 2')
         # self.dropdownMenu.addAction('&Option 3')
-        #
-        # self.editMItem.addMenu(self.dropdownMenu)
 
-        # self.openFileAction=QAction('&Open')
-        # self.fileMItem.addAction(self.openFileAction)
 
         self.editColorOfFieldAction=QAction('Color of field')
         self.editMItem.addAction(self.editColorOfFieldAction)
@@ -64,6 +58,12 @@ class Menu(QMenuBar):
 
     def restartGameAction(self, handler):
         self.restartAction.triggered.connect(handler)
+
+    def loadGameAction(self, handler):
+        self.loadMenuAction.triggered.connect(handler)
+
+    def saveGameAction(self, handler):
+        self.saveMenuAction.triggered.connect(handler)
 
 
 
