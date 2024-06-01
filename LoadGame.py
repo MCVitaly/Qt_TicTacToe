@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QFileDialog, QMessageBox, QLabel
 from PyQt6.QtGui import QPixmap
-from MainWindow_package import bigZeroOrCross
+from MainWindow_package import bigZeroOrCross, rgb_field_list, rgb_crosseAndZero_list
+
 import json
 
 parent=None
@@ -21,7 +22,12 @@ def loadGame():
 
     global parent, gameField, playerX, playerY
 
+
     gameField.restartGameField()
+
+    global rgb_field_list, rgb_crosseAndZero_list
+    rgb_field_list=dataToLoad['gameField']['rgb_field_list']
+    rgb_crosseAndZero_list=dataToLoad['gameField']['rgb_crosseAndZero_list']
 
     playerX.playerName.setText(dataToLoad['playerX']['name'])
     playerX.pixmap = QPixmap(dataToLoad['playerX']['picturePath'])

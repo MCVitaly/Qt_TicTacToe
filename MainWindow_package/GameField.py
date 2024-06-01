@@ -93,6 +93,7 @@ class GameFieldCell_wdg(QWidget):
             self.buttons[0][0].text()==self.buttons[1][0].text()==self.buttons[2][0].text()=='x' or
             self.buttons[0][1].text()==self.buttons[1][1].text()==self.buttons[2][1].text()=='x' or
             self.buttons[0][2].text()==self.buttons[1][2].text()==self.buttons[2][2].text()=='x'):
+
             self.vinner_in_cell='x'
             for i in range(3):
                 for j in range(3):
@@ -114,6 +115,7 @@ class GameFieldCell_wdg(QWidget):
                 for j in range(3):
                     if (self._gameFieldPointer.cells[i][j] == self):
                         self._gameFieldPointer.bigCrossAndZero_matrix[i][j]=bigZeroOrCross('o')
+
                         self._gameFieldPointer.layout_.addWidget(self._gameFieldPointer.bigCrossAndZero_matrix[i][j], i, j)
         elif(self.buttons[0][0].access==False and self.buttons[0][1].access==False and self.buttons[0][2].access==False and
         self.buttons[1][0].access==False and self.buttons[1][1].access==False and self.buttons[1][2].access==False and

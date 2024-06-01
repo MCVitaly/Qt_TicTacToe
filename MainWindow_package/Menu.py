@@ -20,10 +20,6 @@ class Menu(QMenuBar):
         self.saveMenuAction=QAction('Save')
         self.stateMItem.addAction(self.saveMenuAction)
 
-        # self.dropdownMenu=QMenu('&Dropdown')
-        # self.dropdownMenu.addAction('&Option 1')
-        # self.dropdownMenu.addAction('&Option 2')
-        # self.dropdownMenu.addAction('&Option 3')
 
 
         self.editColorOfFieldAction=QAction('Color of field')
@@ -32,7 +28,6 @@ class Menu(QMenuBar):
 
         self.restartAction=QAction('Restart game')
         self.restartMItem.addAction(self.restartAction)
-        #self.restartAction.triggered.connect(self.restartGame)
 
         self.editColorOfCrossAndZero=QAction('Color of cross and zero')
         self.editMItem.addAction(self.editColorOfCrossAndZero)
@@ -40,7 +35,6 @@ class Menu(QMenuBar):
 
     def editFieldColor(self):
         self.dialog=QColorDialog(parent=self)
-        #self.dialog.open()
         color = QColor(self.dialog.getColor())
 
         global rgb_field_list

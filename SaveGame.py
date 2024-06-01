@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
+from MainWindow_package import rgb_field_list, rgb_crosseAndZero_list
 import json
 
 parent=None
@@ -15,9 +16,11 @@ def getGameComponets(_parent, _gameField, _playerX, _playerY):
 
 
 def saveGame():
-    global parent, gameField, playerX, playerY
+    global parent, gameField, playerX, playerY, rgb_field_list, rgb_crosseAndZero_list
     dataToSave = {
         "gameField": {
+            'rgb_field_list': rgb_field_list,
+            'rgb_crosseAndZero_list': rgb_crosseAndZero_list,
             'vinner_in_cell': [[gameField.cells[i][j].vinner_in_cell for j in range(3)] for i in range(3)],
             'current_x_of_cell': gameField.current_x_of_cell,
             'current_y_of_cell': gameField.current_y_of_cell,
