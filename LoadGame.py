@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QFileDialog, QMessageBox, QLabel
 from PyQt6.QtGui import QPixmap
+from MainWindow_package import bigZeroOrCross
 import json
 
 parent=None
@@ -14,10 +15,13 @@ def getGameComponetsToLoad(_parent, _gameField, _playerX, _playerY):
     playerY=_playerY
 
 def loadGame():
+
     with open('test_file.json', 'r') as file:
         dataToLoad=json.load(file)
 
     global parent, gameField, playerX, playerY
+
+    gameField.restartGameField()
 
     playerX.playerName.setText(dataToLoad['playerX']['name'])
     playerX.pixmap = QPixmap(dataToLoad['playerX']['picturePath'])
@@ -34,7 +38,6 @@ def loadGame():
 
     gameField.currentPlayer=dataToLoad['gameField']['currentPlayer']
     gameField.accessToAllButtons_flag=dataToLoad['gameField']['accessToAllButtons_flag']
-    gameField.didFirstClickBe= dataToLoad['gameField']['didFirstClickBe']
     for i in range(3):
         for j in range(3):
             for k in range(3):
@@ -42,11 +45,22 @@ def loadGame():
                     gameField.cells[i][j].buttons[k][l].access=dataToLoad['gameField']['cells'][i][j][k][l]['access']
                     gameField.cells[i][j].buttons[k][l].setText(dataToLoad['gameField']['cells'][i][j][k][l]['text'])
                     gameField.cells[i][j].buttons[k][l].setStyleSheet(dataToLoad['gameField']['cells'][i][j][k][l]['styleSheet'])
-                    gameField.cells[i][j].buttons[k][l].isEnabled = dataToLoad['gameField']['cells'][i][j][k][l]['isEnabled']
+                    if dataToLoad['gameField']['cells'][i][j][k][l]['isEnabled']:
+                        gameField.cells[i][j].buttons[k][l].setEnabled(True)
+                    else:
+                        gameField.cells[i][j].buttons[k][l].setEnabled(False)
 
     for i in range(3):
         for j in range(3):
             if dataToLoad['gameField']['bigCrossAndZero_matrix'][i][j] is None:
                 gameField.bigCrossAndZero_matrix[i][j]=None
             else:
-                gameField.bigCrossAndZero_matrix[i][j].symbol=dataToLoad['gameField']['bigCrossAndZero_matrix'][i][j]
+                zeroOrCross=bigZeroOrCross(dataToLoad['gameField']['bigCrossAndZero_matrix'][i][j])
+                gameField.layout_.addWidget(zeroOrCross, i, j)
+
+    for i in range(3):
+        for j in range(3):
+            gameField.cells[i][j].vinner_in_cell=dataToLoad['gameField']['vinner_in_cell'][i][j]
+
+    if dataToLoad['gameField']['x_of_cell_before'] is not None:
+        gameField.cells[dataToLoad['gameField']['x_of_cell_before']][dataToLoad['gameField']['y_of_cell_before']].set_access_to_game_field(dataToLoad['gameField']['current_x_of_cell'], dataToLoad['gameField']['current_y_of_cell'])

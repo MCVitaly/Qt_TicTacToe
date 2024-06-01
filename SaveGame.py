@@ -18,9 +18,13 @@ def saveGame():
     global parent, gameField, playerX, playerY
     dataToSave = {
         "gameField": {
+            'vinner_in_cell': [[gameField.cells[i][j].vinner_in_cell for j in range(3)] for i in range(3)],
+            'current_x_of_cell': gameField.current_x_of_cell,
+            'current_y_of_cell': gameField.current_y_of_cell,
+            'x_of_cell_before': gameField.x_of_cell_before,
+            'y_of_cell_before': gameField.y_of_cell_before,
             'currentPlayer': gameField.currentPlayer,
             'accessToAllButtons_flag': gameField.accessToAllButtons_flag,
-            'didFirstClickBe': gameField.didFirstClickBe,
             'cells': [[cellState(gameField.cells[i][j].buttons) for j in range(3)] for i in range(3)],
             'bigCrossAndZero_matrix': [[getBigCrossAndZero_matrix(gameField.bigCrossAndZero_matrix[i][j]) for j in range(3)] for i in range(3)]
         },
